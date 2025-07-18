@@ -13,11 +13,18 @@ function MessageList({ messages, isLoading }) {
 
   useEffect(scrollToBottom, [messages, isLoading]);
 
+  // Custom renderer for links to open in a new tab
+  const markdownComponents = {
+    a: ({ node, ...props }) => (
+      <a {...props} target="_blank" rel="noopener noreferrer">{props.children}</a>
+    ),
+  };
+
   return (
     <main className="message-list">
       {messages.map((msg, index) => (
         <div key={index} className={`message-bubble ${msg.sender}`}>
-          <ReactMarkdown>{msg.text}</ReactMarkdown>
+          <ReactMarkdown components={markdownComponents}>{msg.text}</ReactMarkdown>
         </div>
       ))}
       {isLoading && <TypingIndicator />}
