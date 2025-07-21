@@ -66,18 +66,26 @@ body {
 .chatbot-container {
   width: 100%;
   max-width: 600px;
-  height: 80vh;
-  max-height: 700px;
+  height: 100vh;
+  max-height: 100vh;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 
 /* Chat Header */
 .chatbot-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px;
+  z-index: 101;
   padding: 15px 20px;
   background-color: #007bff;
   color: white;
@@ -85,6 +93,7 @@ body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
 }
 
 .chatbot-header h1 {
@@ -130,11 +139,13 @@ body {
 /* Message List */
 .message-list {
   flex-grow: 1;
-  padding: 20px;
+  padding: 80px 20px 90px 20px; /* top for header, bottom for input bar */
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 /* Individual Message Bubbles */
@@ -250,6 +261,16 @@ body {
   body {
     touch-action: manipulation;
   }
+  .chatbot-header {
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 100vw;
+    max-width: 100vw;
+    padding: 10px 8px;
+    border-radius: 0;
+    box-shadow: none;
+  }
   .chatbot-container {
     max-width: 100vw;
     width: 100vw;
@@ -258,12 +279,21 @@ body {
     border-radius: 0;
     box-shadow: none;
   }
-  .chatbot-header, .chatbot-footer {
-    padding: 10px 8px;
-  }
   .message-list {
-    padding: 10px 5px;
+    padding: 60px 5px 80px 5px;
     gap: 8px;
+    max-width: 100vw;
+    height: 100vh;
+  }
+  .message-input-bar {
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    width: calc(100vw - 8px);
+    max-width: 100vw;
+    padding: 8px 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
   }
   .message-bubble {
     max-width: 90%;
