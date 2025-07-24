@@ -1,27 +1,36 @@
-import React from 'react';
-import '../App.css';
+import React, { useState } from 'react';
 
-function MessageInput({ input, onInputChange, onSubmit, isLoading, apiStatus }) {
+const MessageInput = ({ onSendMessage, isTyping, apiOnline }) => {
+  const [text, setText] = useState('');
+  const isDisabled = isTyping || !apiOnline;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (text.trim() && !isDisabled) {
+      onSendMessage(text);
+      setText('');
+    }
+  };
+
   return (
-    <footer className="chatbot-footer">
-      <div className="message-input-bar">
-        <form onSubmit={onSubmit} className="message-form">
-          <input
-            className="message-input"
-            type="text"
-            value={input}
-            onChange={onInputChange}
-            placeholder={apiStatus.online ? "Ketik pertanyaan Anda..." : "API tidak terhubung"}
-            disabled={!apiStatus.online || isLoading}
-            autoFocus
-          />
-          <button type="submit" disabled={isLoading || !input.trim()}>
-            Kirim
-          </button>
-        </form>
-      </div>
+    <footer className="message-input-bar">
+      <form onSubmit={handleSubmit} className="message-form">
+        <input
+          type="text"
+          className="message-input"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={isDisabled ? "Menunggu respon..." : "Ketik pertanyaan Anda..."}
+          disabled={isDisabled}
+        />
+        <button type="submit" className="send-button" aria-label="Kirim Pesan" disabled={isDisabled || !text.trim()}>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        </button>
+      </form>
     </footer>
   );
-}
+};
 
 export default MessageInput;

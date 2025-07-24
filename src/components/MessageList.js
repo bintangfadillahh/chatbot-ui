@@ -1,36 +1,36 @@
 import React, { useEffect, useRef } from 'react';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown'; // <-- 1. Impor ReactMarkdown
 import TypingIndicator from './TypingIndicator';
-import '../App.css';
 
-function MessageList({ messages, isLoading }) {
-  const messagesEndRef = useRef(null);
+const MessageList = ({ messages, isTyping }) => {
+  const endOfMessagesRef = useRef(null);
 
-  // Fungsi untuk scroll otomatis ke pesan terbaru
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(scrollToBottom, [messages, isLoading]);
-
-  // Custom renderer for links to open in a new tab
-  const markdownComponents = {
-    a: ({ node, ...props }) => (
-      <a {...props} target="_blank" rel="noopener noreferrer">{props.children}</a>
-    ),
-  };
+  useEffect(() => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isTyping]);
 
   return (
     <main className="message-list">
-      {messages.map((msg, index) => (
-        <div key={index} className={`message-bubble ${msg.sender}`}>
-          <ReactMarkdown components={markdownComponents}>{msg.text}</ReactMarkdown>
+      {messages.map((msg) => (
+        <div
+          key={msg.id}
+          className={`message-bubble ${msg.sender === 'user' ? 'user-bubble' : 'bot-bubble'}`}
+        >
+          {/* 2. Gunakan ReactMarkdown untuk merender teks */}
+          <ReactMarkdown
+            components={{
+              // 3. Modifikasi elemen 'a' (link) agar terbuka di tab baru
+              a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" />
+            }}
+          >
+            {msg.text}
+          </ReactMarkdown>
         </div>
       ))}
-      {isLoading && <TypingIndicator />}
-      <div ref={messagesEndRef} />
+      {isTyping && <TypingIndicator />}
+      <div ref={endOfMessagesRef} />
     </main>
   );
-}
+};
 
 export default MessageList;
