@@ -2,8 +2,6 @@
 
 /* Kontainer utama untuk membungkus aplikasi dan membuatnya layar penuh */
 .chat-app-container {
-  /* Menggunakan 100dvh agar tinggi kontainer menyesuaikan dengan area pandang yang terlihat,
-     bahkan saat keyboard mobile muncul atau address bar disembunyikan. */
   height: 100dvh; 
   display: flex;
   justify-content: center;
@@ -19,12 +17,12 @@
   flex-direction: column;
   background-color: var(--background-color);
   overflow: hidden;
-  position: relative; /* Penting agar header & footer absolut berfungsi */
+  position: relative;
 }
 
 /* === Komponen Header === */
 .chat-header {
-  position: absolute; /* Tetap di atas dalam .chat-window */
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -80,7 +78,6 @@
 .message-list {
   flex-grow: 1;
   overflow-y: auto;
-  /* Padding untuk memberi ruang bagi header dan input bar */
   padding: 80px 15px; 
   display: flex;
   flex-direction: column;
@@ -89,8 +86,9 @@
 
 /* Gelembung Pesan & Indikator Mengetik */
 .message-bubble {
-  max-width: 80%; /* Sedikit lebih lebar di mobile */
-  padding: 10px 15px;
+  max-width: 80%;
+  /* PADDING DIKURANGI DI SINI */
+  padding: 8px 14px; /* Sebelumnya: 10px 15px */
   border-radius: 20px;
   line-height: 1.5;
   word-wrap: break-word;
@@ -130,7 +128,7 @@
 
 /* === Input Pesan === */
 .message-input-bar {
-  position: absolute; /* Tetap di bawah dalam .chat-window */
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -189,17 +187,17 @@
 /* === Media Query untuk Layar Lebih Besar (Tablet/Desktop) === */
 @media (min-width: 768px) {
   .chat-app-container {
-    padding: 16px; /* Kembalikan padding di desktop */
+    padding: 16px;
   }
 
   .chat-window {
-    max-width: 800px; /* Batasi lebar di desktop */
-    max-height: 95vh; /* Batasi tinggi di desktop */
-    border-radius: 12px; /* Kembalikan sudut melengkung */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Kembalikan bayangan */
+    max-width: 800px;
+    max-height: 95vh;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .message-bubble {
-    max-width: 75%; /* Kembalikan lebar gelembung semula */
+    max-width: 75%;
   }
 }
