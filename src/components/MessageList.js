@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import ReactMarkdown from 'react-markdown'; // <-- 1. Impor ReactMarkdown
+import ReactMarkdown from 'react-markdown';
 import TypingIndicator from './TypingIndicator';
+import QuickChat from './QuickChat'; // <-- Impor komponen QuickChat
 
-const MessageList = ({ messages, isTyping }) => {
+const MessageList = ({ messages, isTyping, showQuickChat, onQuickChatClick }) => {
   const endOfMessagesRef = useRef(null);
 
   useEffect(() => {
@@ -16,10 +17,8 @@ const MessageList = ({ messages, isTyping }) => {
           key={msg.id}
           className={`message-bubble ${msg.sender === 'user' ? 'user-bubble' : 'bot-bubble'}`}
         >
-          {/* 2. Gunakan ReactMarkdown untuk merender teks */}
           <ReactMarkdown
             components={{
-              // 3. Modifikasi elemen 'a' (link) agar terbuka di tab baru
               a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" />
             }}
           >
@@ -27,6 +26,10 @@ const MessageList = ({ messages, isTyping }) => {
           </ReactMarkdown>
         </div>
       ))}
+      
+      {/* Tampilkan QuickChat jika showQuickChat bernilai true */}
+      {showQuickChat && <QuickChat onQuickChatClick={onQuickChatClick} />}
+
       {isTyping && <TypingIndicator />}
       <div ref={endOfMessagesRef} />
     </main>

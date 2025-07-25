@@ -22,4 +22,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--light-gray);
+
+  /* PERUBAHAN 2: Ukuran font responsif (fluid) diterapkan di sini */
+  /* Min 14px, maks 16px, dan akan menyesuaikan di antara keduanya */
+  font-size: clamp(14px, 0.5vw + 0.75rem, 16px);
+  line-height: 1.5; /* Menambahkan tinggi baris dasar untuk keterbacaan */
 }
